@@ -1,0 +1,7 @@
+H:\zhibo.dpg\zhibo.dpg\bin\Debug\zhibo.dpg.dll
+H:\zhibo.dpg\zhibo.dpg\bin\Debug\zhibo.dpg.pdb
+H:\zhibo.dpg\zhibo.dpg\obj\Debug\zhibo.dpg.csproj.AssemblyReference.cache
+H:\zhibo.dpg\zhibo.dpg\obj\Debug\zhibo.dpg.csproj.CoreCompileInputs.cache
+H:\zhibo.dpg\zhibo.dpg\obj\Debug\zhibo.dpg.dll
+H:\zhibo.dpg\zhibo.dpg\obj\Debug\zhibo.dpg.pdb
+H:\zhibo.dpg\zhibo.dpg\bin\Debug\zhibo.dpg.dll.config

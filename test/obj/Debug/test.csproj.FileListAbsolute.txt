@@ -1,0 +1,12 @@
+H:\zhibo.dpg\test\bin\Debug\test.exe.config
+H:\zhibo.dpg\test\bin\Debug\test.exe
+H:\zhibo.dpg\test\bin\Debug\test.pdb
+H:\zhibo.dpg\test\bin\Debug\zhibo.dpg.dll
+H:\zhibo.dpg\test\bin\Debug\zhibo.dpg.pdb
+H:\zhibo.dpg\test\bin\Debug\zhibo.dpg.dll.config
+H:\zhibo.dpg\test\obj\Debug\test.csproj.AssemblyReference.cache
+H:\zhibo.dpg\test\obj\Debug\test.csproj.SuggestedBindingRedirects.cache
+H:\zhibo.dpg\test\obj\Debug\test.csproj.CoreCompileInputs.cache
+H:\zhibo.dpg\test\obj\Debug\test.csproj.CopyComplete
+H:\zhibo.dpg\test\obj\Debug\test.exe
+H:\zhibo.dpg\test\obj\Debug\test.pdb
