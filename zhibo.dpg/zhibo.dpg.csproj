@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarrageMessages.cs" />
     <Compile Include="JsonParser.cs" />
+    <Compile Include="MyEnum.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="liwu.cs" />
     <Compile Include="LiWuList.cs" />
