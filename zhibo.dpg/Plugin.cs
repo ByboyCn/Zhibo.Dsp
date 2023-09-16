@@ -1,12 +1,10 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace zhibo.dpg
 {
@@ -36,21 +34,174 @@ namespace zhibo.dpg
         private static ConfigEntry<string> liwu5;
         private static ConfigEntry<string> wupinid5;
         private static ConfigEntry<int> count5;
+
         public static WebSocketClient websocket = new WebSocketClient("ws://127.0.0.1:8888");
         private static List<int> strList = new List<int>();
 
-        private static List<ItemProto> dataArray = new List<ItemProto>();// = LDB.items.dataArray.ToList();
+        private static List<ItemIds> dataArray = new List<ItemIds>();
+        private void GetItem()
+        {
+            if (dataArray.Count == 0)
+            {
+                if (!File.Exists("itemids.txt"))
+                {
+                    File.WriteAllText("itemids.txt", @"1001  铁矿
+1002  铜矿
+1003  硅石
+1004  钛石
+1005  石矿
+1006  煤矿
+1030  木材
+1031  植物燃料
+1011  可燃冰
+1012  金伯利矿石
+1013  分形硅石
+1014  光栅石
+1015  刺笋结晶
+1016  单极磁石
+1101  铁块
+1104  铜块
+1105  高纯硅块
+1106  钛块
+1108  石材
+1109  高能石墨
+1103  钢材
+1107  钛合金
+1110  玻璃
+1119  钛化玻璃
+1111  棱镜
+1112  金刚石
+1113  晶格硅
+1201  齿轮
+1102  磁铁
+1202  磁线圈
+1203  电动机
+1204  电磁涡轮
+1205  超级磁场环
+1206  粒子容器
+1127  奇异物质
+1301  电路板
+1303  处理器
+1305  量子芯片
+1302  微晶元件
+1304  位面过滤器
+1402  粒子宽带
+1401  电浆激发器
+1404  光子合并器
+1501  太阳帆
+1000  水
+1007  原油
+1114  精炼油
+1116  硫酸
+1120  氢
+1121  重氢
+1122  反物质
+1208  临界光子
+1801  液氢燃料棒
+1802  氘核燃料棒
+1803  反物质燃料棒
+1115  塑料
+1123  石墨烯
+1124  碳纳米管
+1117  有机晶体
+1118  钛晶石
+1126  卡西米尔晶体
+1209  引力透镜
+1210  空间翘曲器
+1403  湮灭约束球
+1405  推进器
+1406  加力推进器
+5003  配送运输机
+5001  物流运输机
+5002  星际物流运输船
+1125  框架材料
+1502  戴森球组件
+1503  小型运载火箭
+1131  地基
+1141  增产剂 Mk.I
+1142  增产剂 Mk.II
+1143  增产剂 Mk.III
+2001  传送带
+2002  高速传送带
+2003  极速传送带
+2011  分拣器
+2012  高速分拣器
+2013  极速分拣器
+2020  四向分流器
+2040  自动集装机
+2030  流速监测器
+2313  喷涂机
+2107  物流配送器
+2101  小型储物仓
+2102  大型储物仓
+2106  储液罐
+2303  制造台 Mk.I
+2304  制造台 Mk.II
+2305  制造台 Mk.III
+2201  电力感应塔
+2202  无线输电塔
+2212  卫星配电站
+2203  风力涡轮机
+2204  火力发电厂
+2211  微型聚变发电站
+2213  地热发电站
+2301  采矿机
+2316  大型采矿机
+2306  抽水站
+2302  电弧熔炉
+2315  位面熔炉
+2307  原油萃取站
+2308  原油精炼厂
+2309  化工厂
+2317  量子化工厂
+2314  分馏塔
+2205  太阳能板
+2206  蓄电器
+2207  蓄电器（满）
+2311  电磁轨道弹射器
+2208  射线接收站
+2312  垂直发射井
+2209  能量枢纽
+2310  微型粒子对撞机
+2210  人造恒星
+2103  行星内物流运输站
+2104  星际物流运输站
+2105  轨道采集器
+2901  矩阵研究站
+3001  -
+3002  |
+3003  --
+3004  -|
+3005  |-
+3006  ---
+3007  --|
+6001  电磁矩阵
+6002  能量矩阵
+6003  结构矩阵
+6004  信息矩阵
+6005  引力矩阵
+6006  宇宙矩阵");
+                }
+                var txt = File.ReadAllText("itemids.txt");
+                var tt = txt.Split('\n');
+                foreach (var t in tt)
+                {
+                    var t1 = t.Replace("  ", " ");
+                    var jj = t1.Split(' ');
+                    var ItemIds = new ItemIds()
+                    {
+                        Id = int.Parse(jj[0]),
+                        Name = jj[1],
+                    };
+                    dataArray.Add(ItemIds);
+                }
+            }
 
+        }
         private void Steeing()
         {
-          
-            var acceptableValues = new AcceptableValueList<string>(dataArray.Select(i => i.Name).ToArray());
 
-            //var selectedItemName = Config.Bind(
-            //    "Zhibo",
-            //    "wupinname1",
-            //    "铁矿",  
-            //    new ConfigDescription("Select an item from the dropdown", )
+            var acceptableValues = new AcceptableValueList<string>(dataArray.Select(i => i.Name).ToArray());
             liwu2 = Config.Bind("Zhibo", "liwuid2", "小心心", "礼物2");
             liwu3 = Config.Bind("Zhibo", "liwuid3", "小心心", "礼物3");
             liwu4 = Config.Bind("Zhibo", "liwuid4", "小心心", "礼物4");
@@ -69,9 +220,8 @@ namespace zhibo.dpg
 
         void Start()
         {
-            Thread.Sleep(1000 * 2);
-            dataArray = null;
-            dataArray = LDB.items.dataArray.ToList();
+            GetItem();
+            Thread.Sleep(5 * 1000);
             Steeing();
             Logger.LogInfo($"直播插件加载成功");
             websocket.MessageReceived += Websocket_MessageReceived;
@@ -175,12 +325,12 @@ namespace zhibo.dpg
                     break;
             }
         }
-        
+
         private static void AddToPackage(string itemname, int count)
         {
             var item = dataArray.FirstOrDefault(i => i.Name == itemname);
-            GameMain.mainPlayer.TryAddItemToPackage(item.ID, count, 0, false, 1);
-            UIItemup.Up(item.ID, count);
+            GameMain.mainPlayer.TryAddItemToPackage(item.Id, count, 0, false, 1);
+            UIItemup.Up(item.Id, count);
         }
 
         public string SubString(string or, string start, string end)
