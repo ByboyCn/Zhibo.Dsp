@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zhibo.dpg", "zhibo.dpg\zhib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{D9A526A3-45ED-4157-ABF3-3F6246469AA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Byboy.LuckyDraw", "Byboy.LuckyDraw\Byboy.LuckyDraw.csproj", "{9BF4FC2A-6444-4D0B-A2AD-F3C968ECC549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D9A526A3-45ED-4157-ABF3-3F6246469AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9A526A3-45ED-4157-ABF3-3F6246469AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9A526A3-45ED-4157-ABF3-3F6246469AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF4FC2A-6444-4D0B-A2AD-F3C968ECC549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF4FC2A-6444-4D0B-A2AD-F3C968ECC549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF4FC2A-6444-4D0B-A2AD-F3C968ECC549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF4FC2A-6444-4D0B-A2AD-F3C968ECC549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

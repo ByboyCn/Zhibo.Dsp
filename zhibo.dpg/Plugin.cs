@@ -1,10 +1,12 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace zhibo.dpg
 {
@@ -18,6 +20,8 @@ namespace zhibo.dpg
         public const string VERSION = "1.0.2";
         public const string NAME = "直播插件";
         private const string GAME_PROCESS = "DSPGAME.exe";
+        public bool ShowWindow;
+        public bool FirstOpen = true;
         private static List<Liwu> LiWuList = new List<Liwu>();
         private static ConfigEntry<int> dianzaj;
         private static ConfigEntry<string> wupinid1;
@@ -39,12 +43,25 @@ namespace zhibo.dpg
         private static List<int> strList = new List<int>();
 
         private static List<ItemIds> dataArray = new List<ItemIds>();
+
+        public float Window_Width { get; private set; }
+        public float Window_Height { get; private set; }
+
+        public float Window_X  = 450f;
+        public float Window_Y  = 200f;
+        public float Temp_Window_Moving_X;
+        public float Temp_Window_Moving_Y;
+        public float Temp_Window_X_move;
+        public float Temp_Window_Y_move;
+        public bool Window_moving;
+
         private void GetItem()
         {
             if (dataArray.Count == 0)
             {
                 if (!File.Exists("itemids.txt"))
                 {
+                    #region itemIds
                     File.WriteAllText("itemids.txt", @"1001  铁矿
 1002  铜矿
 1003  硅石
@@ -181,6 +198,7 @@ namespace zhibo.dpg
 6004  信息矩阵
 6005  引力矩阵
 6006  宇宙矩阵");
+                    #endregion
                 }
                 var txt = File.ReadAllText("itemids.txt");
                 var tt = txt.Split('\n');
@@ -220,6 +238,7 @@ namespace zhibo.dpg
 
         void Start()
         {
+            this.ShowWindow = false;
             GetItem();
             Thread.Sleep(5 * 1000);
             Steeing();
@@ -227,6 +246,8 @@ namespace zhibo.dpg
             websocket.MessageReceived += Websocket_MessageReceived;
             websocket.ErrorOccurred += Websocket_ErrorOccurred;
             _ = websocket.ConnectAsync();
+            this.Temp_Window_Moving_X = 0f;
+            this.Temp_Window_Moving_Y = 0f;
         }
 
         private void Websocket_ErrorOccurred(string obj)
@@ -344,8 +365,80 @@ namespace zhibo.dpg
             }
             return or;
         }
+
+        void OnGUI()
+        {
+            bool showWindow = this.ShowWindow;
+            if (showWindow)
+            {
+                //KeyCode
+                if (this.FirstOpen)
+                {
+                    FirstOpen = false;
+                    GUI.skin.label.fontSize = 16;
+                    GUI.skin.button.fontSize =16;
+                    GUI.skin.toggle.fontSize = 16;
+                    GUI.skin.textField.fontSize = 16;
+                    GUI.skin.textArea.fontSize = 16;
+                    this.Window_Width = (float)(16 * 15);
+                    this.Window_Height = (float)((16 + 4) * 5);
+                }
+                int num = GUI.skin.toggle.fontSize + 4;
+                this.Window_Height = (float)(num * 13);
+                Rect rect = new Rect(this.Window_X, this.Window_Y, this.Window_Width, this.Window_Height);
+                this.moveWindow(ref this.Window_X, ref this.Window_Y, ref this.Temp_Window_X_move, ref this.Temp_Window_Y_move, ref this.Window_moving, ref this.Temp_Window_Moving_X, ref this.Temp_Window_Moving_Y, this.Window_Width);
+                rect = GUI.Window(20231005, rect, new GUI.WindowFunction(this.ZhiboConfigWindow), NAME+"配置" + VERSION);
+            }
+        }
+
+        private void ZhiboConfigWindow(int id)
+        {
+
+        }
+
+        public void moveWindow(ref float x, ref float y, ref float x_move, ref float y_move, ref bool movewindow, ref float tempx, ref float tempy, float x_width)
+        {
+            Vector2 vector = Input.mousePosition;
+            int height = Screen.height;
+            bool flag = vector.x > x && vector.x < x + x_width && (float)height - vector.y > y && (float)height - vector.y < y + 20f;
+            if (flag)
+            {
+                bool mouseButton = Input.GetMouseButton(0);
+                if (mouseButton)
+                {
+                    bool flag2 = !movewindow;
+                    if (flag2)
+                    {
+                        x_move = x;
+                        y_move = y;
+                        tempx = vector.x;
+                        tempy = (float)height - vector.y;
+                    }
+                    movewindow = true;
+                    x = x_move + vector.x - tempx;
+                    y = y_move + ((float)height - vector.y) - tempy;
+                }
+                else
+                {
+                    movewindow = false;
+                    tempx = x;
+                    tempy = y;
+                }
+            }
+            else
+            {
+                bool flag3 = movewindow;
+                if (flag3)
+                {
+                    movewindow = false;
+                    x = x_move + vector.x - tempx;
+                    y = y_move + ((float)height - vector.y) - tempy;
+                }
+            }
+        }
         void Update()
         {
+
             Steeing();
         }
     }
