@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,9 @@ namespace Byboy.LuckyDraw
         void Start()
         {
             try {
+                //跳过游戏异常检测
+                Harmony.CreateAndPatchAll(typeof(AchievementLogicPatch),null);
+                Harmony.CreateAndPatchAll(typeof(AbnormalityLogicPatch),null);
                 GetItem();
                 //通过反射获得LDB._recipes的值
                 // 获取LDB类型的Type对象
@@ -295,27 +299,8 @@ namespace Byboy.LuckyDraw
 
         void Update()
         {
-            /**
-[Info   :     幸运大抽奖] 当前物品数量0,当前建筑数量0,当前战斗数量0
-[Info   :     幸运大抽奖] 物品添加完成
-[Info   :     幸运大抽奖] 建筑添加完成
-[Info   :     幸运大抽奖] 战斗添加完成
-[Info   :     幸运大抽奖] 更新完成后物品数量89,当前建筑数量51,当前战斗数量32
-[Info   :     幸运大抽奖] 初始化开始
-[Info   :     幸运大抽奖] 初始化完成
-[Error  :     幸运大抽奖] System.NullReferenceException: Object reference not set to an instance of an object
-  at Byboy.LuckyDraw.Plugin.Update () [0x00485] in <4d2e2bf228c34627a8c1f720b94522f6>:0
-[Error  :     幸运大抽奖] System.NullReferenceException: Object reference not set to an instance of an object
-  at Byboy.LuckyDraw.Plugin.Update () [0x00485] in <4d2e2bf228c34627a8c1f720b94522f6>:0
-[Error  :     幸运大抽奖] System.NullReferenceException: Object reference not set to an instance of an object
-  at Byboy.LuckyDraw.Plugin.Update () [0x00485] in <4d2e2bf228c34627a8c1f720b94522f6>:0
-[Error  :     幸运大抽奖] System.NullReferenceException: Object reference not set to an instance of an object
-  at Byboy.LuckyDraw.Plugin.Update () [0x00485] in <4d2e2bf228c34627a8c1f720b94522f6>:0
-[Info   : Unity Log] Steam成就数据同步成功！游戏总成就数量：128
-             */
             try {
-                Console.WriteLine();
-
+                
                 if (!isRunning) {
                     return;
                 }
@@ -357,7 +342,7 @@ namespace Byboy.LuckyDraw
                         //由于坐标是7*12的,所以第二位不能高于7 第三位不能高于1,第四位不能高于2
                         GridIndex = 1801,
                         //图标路径
-                        IconPath = "Icons/Signal/signal-501",
+                        IconPath = "Icons/Tech/1311",
                         //描述信息
                         Description = "这是一个物品盲盒",
                         //前置科技
@@ -391,7 +376,7 @@ namespace Byboy.LuckyDraw
                         //由于坐标是7*12的,所以第二位不能高于7 第三位不能高于1,第四位不能高于2
                         GridIndex = 1802,
                         //图标路径
-                        IconPath = "Icons/Signal/signal-502",
+                        IconPath = "Icons/Tech/1201",
                         //描述信息
                         Description = "这是一个建筑盲盒",
                         //前置科技
@@ -424,7 +409,7 @@ namespace Byboy.LuckyDraw
                         //由于坐标是7*12的,所以第二位不能高于7 第三位不能高于1,第四位不能高于2
                         GridIndex = 1803,
                         //图标路径
-                        IconPath = "Icons/Signal/signal-503",
+                        IconPath = "Icons/Tech/1801",
                         //描述信息
                         Description = "这是一个战斗盲盒",
                         //前置科技

@@ -69,6 +69,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbnormalityLogicPatch.cs" />
+    <Compile Include="AchievementLogicPatch.cs" />
     <Compile Include="ItemIds.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
